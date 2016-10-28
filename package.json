@@ -1,0 +1,21 @@
+{
+  "name": "ts-apiguard",
+  "version": "0.0.1",
+  "description": "Experimental Runtime-Typesafe API-Guard for TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "typescript",
+    "ts",
+    "typesafe",
+    "type",
+    "safe",
+    "api",
+    "guard",
+    "apiguard"
+  ],
+  "author": "Clemens Himmer (tarekis)",
+  "license": "MIT"
+}

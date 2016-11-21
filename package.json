@@ -17,5 +17,23 @@
     "apiguard"
   ],
   "author": "Clemens Himmer (tarekis)",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tarekis/ts-apiguard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tarekis/ts-apiguard/issues"
+  },
+  "homepage": "https://github.com/tarekis/ts-apiguard#readme",
+  "dependencies": {
+    "q": "^1.4.1",
+    "validator": "^6.1.0",
+    "reflect-metadata": "^0.1.8"
+  },
+  "devDependencies": {
+    "@types/q": "0.0.32",
+    "@types/validator": "^5.7.34",
+    "tsc": "^1.20150623.0"
+  }
 }

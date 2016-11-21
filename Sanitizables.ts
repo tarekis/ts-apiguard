@@ -1,27 +1,41 @@
 ﻿import 'reflect-metadata';
 
-export function sanitize(target: Sanitizable, key: string)
+function sanitize(target, key: string)
 {
-   target.sanitizeObject = target.sanitizeObject || {}; // Pre-class initialize fix .. or so?
+   // Read
    let type = Reflect.getMetadata('design:type', target, key);
    let optional = Reflect.getMetadata('optional', target, key);
-   target.sanitizeObject[key + (optional ? '?' : '')] = type;
+   let constructor = target.constructor;
+   let parent = Object.getPrototypeOf(constructor.prototype).constructor || {};
+
+   // Initialize
+   if (!constructor.__typeRules__)
+   {
+      Object.defineProperty(constructor, '__typeRules__', {
+         value: (<any>Object).assign({}, (parent.__typeRules__ || {})),
+         writable: true,
+         enumerable: false
+      });
+   }
+
+   // Write
+   let o = {};
+   o[key + (optional ? '?' : '')] = type;
+   Object.defineProperty(constructor, '__typeRules__', {
+      value: (<any>Object).assign(constructor.__typeRules__, o)
+   });
 }
 
-export function optional(target: Sanitizable, key: string)
+function optional(target: Sanitizable, key: string)
 {
    Reflect.defineMetadata('optional', true, target, key);
 }
 
-export class Sanitizable
+interface Sanitizable
 {
-   private static _sanitizeObject: {[key: string]: Function} = {};
-   get sanitizeObject(): { [key: string]: Function }
-   {
-      return Sanitizable._sanitizeObject;
-   }
-   set sanitizeObject(sanitizeObject: { [key: string]: Function })
-   {
-      Sanitizable._sanitizeObject = sanitizeObject;
-   }
+   __typeRules__?: {[key: string] : Function}
 }
+
+export { Sanitizable }
+export { optional }
+export { sanitize }

@@ -9,10 +9,10 @@ function sanitize(target, key: string)
    let parent = Object.getPrototypeOf(constructor.prototype).constructor || {};
 
    // Initialize
-   if (!constructor.__typeRules__)
+   if (!constructor['__ts-apiguard:typeRules__'])
    {
-      Object.defineProperty(constructor, '__typeRules__', {
-         value: (<any>Object).assign({}, (parent.__typeRules__ || {})),
+      Object.defineProperty(constructor, '__ts-apiguard:typeRules__', {
+         value: (<any>Object).assign({}, (parent['__ts-apiguard:typeRules__'] || {})),
          writable: true,
          enumerable: false
       });
@@ -21,8 +21,8 @@ function sanitize(target, key: string)
    // Write
    let o = {};
    o[key + (optional ? '?' : '')] = type;
-   Object.defineProperty(constructor, '__typeRules__', {
-      value: (<any>Object).assign(constructor.__typeRules__, o)
+   Object.defineProperty(constructor, '__ts-apiguard:typeRules__', {
+      value: (<any>Object).assign(constructor['__ts-apiguard:typeRules__'], o)
    });
 }
 
@@ -33,7 +33,7 @@ function optional(target: Sanitizable, key: string)
 
 interface Sanitizable
 {
-   __typeRules__?: {[key: string] : Function}
+   '__ts-apiguard:typeRules__'?: {[key: string] : Function}
 }
 
 export { Sanitizable }

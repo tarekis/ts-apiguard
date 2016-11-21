@@ -7,9 +7,9 @@ import { Sanitizable }              from './Sanitizables'
 
 export default function (object: Object, ruleClass: Sanitizable, rejectOnAdditionalProperty?: boolean): Q.Promise<{} | { [key: string]: boolean }>
 {
-   if (ruleClass && ruleClass.__typeRules__)
+   if (ruleClass && ruleClass['__ts-apiguard:typeRules__'])
    {
-      let expectedPropertyMap = ruleClass.__typeRules__;
+      let expectedPropertyMap = ruleClass['__ts-apiguard:typeRules__'];
       let objectMirror = (<any>Object).assign({}, object);
 
       if (object)
